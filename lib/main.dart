@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'core/router.dart';
 import 'core/service_locator.dart' as di;
 import 'core/theme.dart';
-import 'features/auth/presentation/pages/auth_gate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Biometric To-Do',
       theme: AppTheme.lightTheme,
-      home: const AuthGate(),
+      routerConfig: AppRouter.router,
       debugShowCheckedModeBanner: false,
     );
   }

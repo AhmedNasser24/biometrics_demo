@@ -8,6 +8,8 @@ A production-ready, fully responsive Flutter To-Do List application that enforce
 - **Clean Architecture**: Feature-first structure separating Domain, Data, and Presentation.
 - **State Management**: Uses `flutter_bloc` (Cubit) with scoped instances.
 - **Dependency Injection**: Uses `get_it` for efficient dependency management.
+- **Navigation**: Uses `go_router` for declarative routing.
+- **Animations**: Smooth list animations using `animated_list_plus`.
 - **Persistence**: Tasks are saved locally using `shared_preferences`.
 - **Responsive Design**: Adapts to Phone and Tablet layouts.
 

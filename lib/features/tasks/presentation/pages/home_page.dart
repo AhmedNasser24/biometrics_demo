@@ -4,7 +4,8 @@ import '../../../../core/service_locator.dart';
 import '../../../../core/text_styles.dart';
 import '../cubit/task_cubit.dart';
 import '../cubit/task_state.dart';
-import '../widgets/task_item.dart';
+import '../widgets/empty_task_body.dart';
+import '../widgets/tasks_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,6 +21,47 @@ class HomePage extends StatelessWidget {
 
 class HomePageView extends StatelessWidget {
   const HomePageView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appBar(),
+      body: BlocBuilder<TaskCubit, TaskState>(
+        builder: (context, state) {
+          if (state is TaskLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is TaskLoaded) {
+            if (state.tasks.isEmpty) {
+              return const EmptyTaskBody();
+            }
+
+            return TaskList(tasks: state.tasks);
+          } else if (state is TaskError) {
+            return Center(
+              child: Text(
+                'Error: ${state.message}',
+                style: AppTextStyles.regular14Red,
+              ),
+            );
+          }
+          return const SizedBox.shrink();
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showAddTaskDialog(context),
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  AppBar appBar() {
+    return AppBar(
+      title: Text(
+        'My Tasks',
+        style: AppTextStyles.bold24PrimaryDark.copyWith(color: Colors.white),
+      ),
+    );
+  }
 
   void _showAddTaskDialog(BuildContext context) {
     final TextEditingController controller = TextEditingController();
@@ -72,82 +114,6 @@ class HomePageView extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'My Tasks',
-          style: AppTextStyles.bold24PrimaryDark.copyWith(color: Colors.white),
-        ),
-      ),
-      body: BlocBuilder<TaskCubit, TaskState>(
-        builder: (context, state) {
-          if (state is TaskLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is TaskLoaded) {
-            if (state.tasks.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.task_alt, size: 64, color: Colors.grey[400]),
-                    const SizedBox(height: 16),
-                    Text(
-                      'No tasks yet',
-                      style: AppTextStyles.semiBold20PrimaryDark.copyWith(
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            return LayoutBuilder(
-              builder: (context, constraints) {
-                if (constraints.maxWidth > 600) {
-                  // Tablet layout: Centered container with max width
-                  return Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 600),
-                      child: ListView.builder(
-                        itemCount: state.tasks.length,
-                        itemBuilder: (context, index) {
-                          return TaskItem(task: state.tasks[index]);
-                        },
-                      ),
-                    ),
-                  );
-                } else {
-                  // Mobile layout: Full width
-                  return ListView.builder(
-                    itemCount: state.tasks.length,
-                    itemBuilder: (context, index) {
-                      return TaskItem(task: state.tasks[index]);
-                    },
-                  );
-                }
-              },
-            );
-          } else if (state is TaskError) {
-            return Center(
-              child: Text(
-                'Error: ${state.message}',
-                style: AppTextStyles.regular14Red,
-              ),
-            );
-          }
-          return const SizedBox.shrink();
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddTaskDialog(context),
-        child: const Icon(Icons.add),
       ),
     );
   }
