@@ -26,37 +26,52 @@ class HomePageView extends StatelessWidget {
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text('Add New Task', style: AppTextStyles.semiBold20PrimaryDark),
-        content: TextField(
-          controller: controller,
-          decoration: const InputDecoration(
-            hintText: 'Enter task title',
-            border: OutlineInputBorder(),
-          ),
-          autofocus: true,
-          style: AppTextStyles.regular16black87,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: Text(
-              'Cancel',
-              style: AppTextStyles.regular14black87.copyWith(
-                color: Colors.grey,
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Add New Task',
+                style: AppTextStyles.semiBold20PrimaryDark,
               ),
-            ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: controller,
+                decoration: const InputDecoration(
+                  hintText: 'Enter task title',
+                  border: OutlineInputBorder(),
+                ),
+                autofocus: true,
+                style: AppTextStyles.regular16black87,
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => Navigator.pop(dialogContext),
+                    child: Text(
+                      'Cancel',
+                      style: AppTextStyles.regular14black87.copyWith(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (controller.text.isNotEmpty) {
+                        // Use the context from HomePageView to access the Cubit
+                        context.read<TaskCubit>().addTask(controller.text);
+                        Navigator.pop(dialogContext);
+                      }
+                    },
+                    child: const Text('Add'),
+                  ),
+                ],
+              ),
+            ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              if (controller.text.isNotEmpty) {
-                // Use the context from HomePageView to access the Cubit
-                context.read<TaskCubit>().addTask(controller.text);
-                Navigator.pop(dialogContext);
-              }
-            },
-            child: const Text('Add'),
-          ),
-        ],
+        ),
       ),
     );
   }
