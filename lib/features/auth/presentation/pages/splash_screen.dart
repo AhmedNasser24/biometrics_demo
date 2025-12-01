@@ -1,28 +1,57 @@
 import 'package:flutter/material.dart';
+import '../../../../core/text_styles.dart';
+import '../../../../core/theme.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.lock_person, size: 100, color: Color(0xFF03045E)),
-            SizedBox(height: 24),
-            Text(
-              'Biometric To-Do',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF03045E),
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [AppTheme.primaryDark, AppTheme.primaryAccent],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.lock_person_rounded,
+                  size: 80,
+                  color: Colors.white,
+                ),
               ),
-            ),
-            SizedBox(height: 24),
-            CircularProgressIndicator(),
-          ],
+              const SizedBox(height: 24),
+              Text(
+                'Biometric To-Do',
+                style: AppTextStyles.bold32PrimaryDark.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Secure your tasks',
+                style: AppTextStyles.regular16black87.copyWith(
+                  color: Colors.white70,
+                ),
+              ),
+              const SizedBox(height: 48),
+              const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            ],
+          ),
         ),
       ),
     );

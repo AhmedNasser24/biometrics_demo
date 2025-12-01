@@ -6,8 +6,12 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthRepository _authRepository;
 
   AuthCubit(this._authRepository) : super(AuthInitial());
-
+  bool isFirst = true;
   Future<void> checkBiometrics() async {
+    if (isFirst) {
+      await Future.delayed(const Duration(seconds: 2));
+      isFirst = false;
+    }
     emit(AuthLoading());
     try {
       final isSupported = await _authRepository.isDeviceSupported();

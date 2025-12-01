@@ -13,8 +13,10 @@ A production-ready, fully responsive Flutter To-Do List application that enforce
 - **Task Management**:
     - **Edit**: Tap to edit task titles.
     - **Filter**: Switch between "All" (Active) and "Completed" tasks.
+- **UI/UX**:
+    - **Splash Screen**: Beautiful gradient splash screen with biometric icon.
+    - **Responsive Design**: Adapts to Phone and Tablet layouts.
 - **Persistence**: Tasks are saved locally using `shared_preferences`.
-- **Responsive Design**: Adapts to Phone and Tablet layouts.
 
 ## Architecture
 

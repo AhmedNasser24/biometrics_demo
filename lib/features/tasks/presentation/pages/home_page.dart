@@ -69,24 +69,9 @@ class HomePageView extends StatelessWidget {
                     ? 'No active tasks'
                     : 'No completed tasks',
               );
+            } else {
+              return TasksList(tasks: tasks);
             }
-
-            return LayoutBuilder(
-              builder: (context, constraints) {
-                if (constraints.maxWidth > 600) {
-                  // Tablet layout: Centered container with max width
-                  return Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 600),
-                      child: TasksList(tasks: tasks),
-                    ),
-                  );
-                } else {
-                  // Mobile layout: Full width
-                  return TasksList(tasks: tasks);
-                }
-              },
-            );
           } else if (state is TaskError) {
             return Center(
               child: Text(
