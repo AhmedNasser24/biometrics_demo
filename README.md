@@ -1,4 +1,4 @@
-# Biometric Secured Flutter To-Do App
+# BioTasker
 
 A production-ready, fully responsive Flutter To-Do List application that enforces mandatory Biometric Authentication.
 

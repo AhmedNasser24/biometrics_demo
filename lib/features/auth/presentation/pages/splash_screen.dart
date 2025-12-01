@@ -34,7 +34,7 @@ class SplashScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Biometric To-Do',
+                'BioTasker',
                 style: AppTextStyles.bold32PrimaryDark.copyWith(
                   color: Colors.white,
                 ),
