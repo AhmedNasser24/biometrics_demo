@@ -22,8 +22,8 @@ class AuthErrorBody extends StatelessWidget {
                 color: Colors.orange,
               ),
               const SizedBox(height: 16),
-              Text(
-                'Error: $message',
+              const Text(
+                'Error: Please Try Again',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.medium18PrimaryDark,
               ),
@@ -32,7 +32,10 @@ class AuthErrorBody extends StatelessWidget {
                 onPressed: () {
                   context.read<AuthCubit>().checkBiometrics();
                 },
-                child: Text('Retry', style: AppTextStyles.semiBold16White),
+                child: const Text(
+                  'Retry',
+                  style: AppTextStyles.semiBold16White,
+                ),
               ),
             ],
           ),

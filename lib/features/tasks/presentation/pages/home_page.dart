@@ -25,17 +25,68 @@ class HomePageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      appBar: AppBar(
+        title: Text(
+          'My Tasks',
+          style: AppTextStyles.bold24PrimaryDark.copyWith(color: Colors.white),
+        ),
+        actions: [
+          BlocBuilder<TaskCubit, TaskState>(
+            builder: (context, state) {
+              TaskFilter currentFilter = TaskFilter.all;
+              if (state is TaskLoaded) {
+                currentFilter = state.filter;
+              }
+              return PopupMenuButton<TaskFilter>(
+                initialValue: currentFilter,
+                onSelected: (filter) {
+                  context.read<TaskCubit>().setFilter(filter);
+                },
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    value: TaskFilter.all,
+                    child: Text('All (Active)'),
+                  ),
+                  const PopupMenuItem(
+                    value: TaskFilter.completed,
+                    child: Text('Completed'),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
       body: BlocBuilder<TaskCubit, TaskState>(
         builder: (context, state) {
           if (state is TaskLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is TaskLoaded) {
-            if (state.tasks.isEmpty) {
-              return const EmptyTaskBody();
+            final tasks = state.filteredTasks;
+            if (tasks.isEmpty) {
+              return EmptyTaskBody(
+                message: state.filter == TaskFilter.all
+                    ? 'No active tasks'
+                    : 'No completed tasks',
+              );
             }
 
-            return TaskList(tasks: state.tasks);
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                if (constraints.maxWidth > 600) {
+                  // Tablet layout: Centered container with max width
+                  return Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 600),
+                      child: TasksList(tasks: tasks),
+                    ),
+                  );
+                } else {
+                  // Mobile layout: Full width
+                  return TasksList(tasks: tasks);
+                }
+              },
+            );
           } else if (state is TaskError) {
             return Center(
               child: Text(
@@ -50,15 +101,6 @@ class HomePageView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddTaskDialog(context),
         child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  AppBar appBar() {
-    return AppBar(
-      title: Text(
-        'My Tasks',
-        style: AppTextStyles.bold24PrimaryDark.copyWith(color: Colors.white),
       ),
     );
   }

@@ -28,7 +28,7 @@ class AuthUnauehnticatedBody extends StatelessWidget {
                 onPressed: () {
                   context.read<AuthCubit>().authenticate();
                 },
-                child: Text(
+                child: const Text(
                   'Retry Authentication',
                   style: AppTextStyles.semiBold16White,
                 ),

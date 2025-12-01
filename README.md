@@ -10,6 +10,9 @@ A production-ready, fully responsive Flutter To-Do List application that enforce
 - **Dependency Injection**: Uses `get_it` for efficient dependency management.
 - **Navigation**: Uses `go_router` for declarative routing.
 - **Animations**: Smooth list animations using `animated_list_plus`.
+- **Task Management**:
+    - **Edit**: Tap to edit task titles.
+    - **Filter**: Switch between "All" (Active) and "Completed" tasks.
 - **Persistence**: Tasks are saved locally using `shared_preferences`.
 - **Responsive Design**: Adapts to Phone and Tablet layouts.
 
