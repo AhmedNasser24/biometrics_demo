@@ -15,6 +15,7 @@ A production-ready, fully responsive Flutter To-Do List application that enforce
     - **Filter**: Switch between "All" (Active) and "Completed" tasks.
 - **UI/UX**:
     - **Splash Screen**: Beautiful gradient splash screen with biometric icon.
+    - **App Icon**: Custom designed biometric-themed launcher icon.
     - **Responsive Design**: Adapts to Phone and Tablet layouts.
 - **Persistence**: Tasks are saved locally using `shared_preferences`.
 

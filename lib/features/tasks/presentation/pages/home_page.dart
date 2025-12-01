@@ -39,6 +39,7 @@ class HomePageView extends StatelessWidget {
               }
               return PopupMenuButton<TaskFilter>(
                 initialValue: currentFilter,
+                offset: const Offset(0, 30),
                 onSelected: (filter) {
                   context.read<TaskCubit>().setFilter(filter);
                 },

@@ -20,8 +20,8 @@ class TaskRepositoryImpl implements TaskRepository {
   Future<void> addTask(TaskEntity task) async {
     final List<TaskEntity> currentTasks = await getTasks();
     final List<TaskModel> newTasks = [
-      ...currentTasks.map((e) => TaskModel.fromEntity(e)),
       TaskModel.fromEntity(task),
+      ...currentTasks.map((e) => TaskModel.fromEntity(e)),
     ];
     await _prefs.setString(_tasksKey, TaskModel.encode(newTasks));
   }
